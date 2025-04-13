@@ -6,6 +6,8 @@ from datasets import load_dataset
 from transformer_model import TransformerNMT, SimpleTokenizer, PAD_TOKEN, BOS_TOKEN, EOS_TOKEN, generate_square_subsequent_mask
 from train import HuggingfaceTranslationDataset, collate_fn, evaluate
 
+# Simple translate testing
+
 # ---------------------- Configuration ----------------------
 BATCH_SIZE = 8
 MAX_LEN = 50
@@ -57,7 +59,7 @@ model.eval()
 # ---------------------- Evaluate on Test Set ----------------------
 criterion = nn.CrossEntropyLoss(ignore_index=PAD_TOKEN)
 test_loss = evaluate(model, test_loader, criterion, DEVICE)
-print(f"\n✅ Test Loss: {test_loss:.4f}")
+print(f"\nTest Loss: {test_loss:.4f}")
 
 # ---------------------- Sample Translation ----------------------
 def greedy_decode(model, src, max_len, start_symbol, device):
@@ -79,5 +81,5 @@ src_ids = torch.tensor(src_tokenizer.tokenize(example), dtype=torch.long)
 out_ids = greedy_decode(model, src_ids, MAX_LEN, BOS_TOKEN, DEVICE)
 translation = tgt_tokenizer.detokenize(out_ids.tolist())
 
-print(f"\n📝 Input: {example}")
-print(f"📘 Translation: {translation}")
+print(f"\nInput: {example}")
+print(f"Translation: {translation}")
